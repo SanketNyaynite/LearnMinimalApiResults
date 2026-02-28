@@ -1,5 +1,6 @@
 using System.Text.Json;
 using WebApi.Models;
+using WebApi.Results;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddProblemDetails();
@@ -13,7 +14,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStatusCodePages();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", HtmlResult() =>
+{
+    string html = "<h2>Welcome to our API<h2> Our API is used to learn ASP.NET Core 9.0 features and improvements.";
+
+    return new HtmlResult(html);
+});
 
 app.MapGet("/employees", () =>
 {
